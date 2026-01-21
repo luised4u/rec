@@ -1,0 +1,801 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap");
+
+/* =========================================
+   CONFIGURAÇÃO GERAL E FUNDO
+   ========================================= */
+body {
+    background-color: #2c1b12;
+    background-image: repeating-linear-gradient(45deg, #2c1b12 25%, #24140e 25%, #24140e 50%, #2c1b12 50%, #2c1b12 75%, #24140e 75%, #24140e 100%);
+    background-size: 20px 20px;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: sans-serif;
+}
+
+/* =========================================
+   ESTRUTURA DO ARMÁRIO
+   ========================================= */
+.chest-of-drawers {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Espaço entre as gavetas */
+}
+
+/* Modo Gaveta Única (Para a página da carta) */
+.chest-of-drawers.single-mode .drawer {
+    height: 650px; /* Mais alto para caber a carta aberta */
+    width: 900px;
+}
+
+/* =========================================
+   GAVETAS
+   ========================================= */
+.drawer {
+    position: relative;
+    width: 600px;  /* Largura padrão */
+    height: 120px; /* Altura padrão fechada */
+    z-index: 10;
+    transition: transform 0.3s;
+}
+
+/* Conteúdo Interno da Gaveta */
+.drawer-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #5d4037; /* Cor do fundo da gaveta */
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+    border-radius: 5px;
+    z-index: 1; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+}
+
+/* Frente da Gaveta (Tampa de Madeira) */
+.drawer-front {
+    position: absolute;
+    top: 0;
+    left: -2%; 
+    width: 104%;
+    height: 100%;
+    background: linear-gradient(to bottom, #8d6e63, #6d4c41);
+    border: 2px solid #3e2723;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    z-index: 20;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Puxador */
+.handle-knob {
+    width: 80px;
+    height: 20px;
+    background: linear-gradient(to bottom, #ffd700, #b8860b);
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+}
+
+.click-hint {
+    color: #3e2723;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+/* Animação: Gaveta Aberta */
+.drawer.is-open .drawer-front {
+    transform: translateY(90%); 
+    z-index: 5;
+}
+
+/* Para a página da carta, onde o fundo é estático */
+.static-open {
+    background-color: #5d4037;
+}
+
+/* Botão Voltar */
+.back-btn {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+.back-btn:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+/* =========================================
+   MINI ENVELOPE (ÍCONE)
+   ========================================= */
+.mini-envelope-link {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.mini-envelope-link:hover {
+    transform: scale(1.1);
+}
+
+.mini-envelope {
+    width: 80px;
+    height: 50px;
+    background-color: Moccasin;
+    position: relative;
+    border-radius: 3px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.mini-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0; 
+    height: 0; 
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    border-top: 30px solid #e0c090;
+}
+
+.mini-heart {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: darkred;
+}
+
+.mini-label {
+    margin-top: 5px;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* =========================================
+   ENVELOPE GRANDE INTERATIVO (DA CARTA)
+   ========================================= */
+:root {
+  --envelope-x: 750px;
+  --envelope-y: 500px;
+  --envelope-bg: Moccasin;
+  --envelope-shadow: Peru;
+  --letter-x: 625px;
+  --letter-y: calc(500px - 2rem - 20px);
+  --letter-bg: AntiqueWhite;
+  --letter-shadow: BurlyWood;
+  --letter-text: #180d07;
+  --letter-font: "Times New Roman", serif;
+  --letter-button-text: darkred;
+  --heart-bg: darkred;
+  --heart-text: white;
+}
+
+@media (min-width: 650px) {
+  :root {
+    --envelope-x: 750px;
+    --envelope-y: 500px;
+    --letter-x: 625px;
+    --letter-y: calc(500px - 1rem - 10px);
+  }
+}
+
+.cssletter {
+  position: relative;
+  margin: 0; 
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.envelope {
+  position: relative;
+  width: var(--envelope-x);
+  height: var(--envelope-y);
+  background: var(--envelope-bg);
+  box-shadow: inset 0 0 30px -5px var(--envelope-shadow), 0 0 50vw 0 #540000;
+}
+
+.envelope::before {
+  content: "˚ʚ❤︎ɞ˚";
+  font-size: 5rem;
+  color: white;
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: soft-light;
+}
+
+.envelope-flap {
+  width: 100%;
+  height: 71%;
+  position: absolute;
+  top: 0;
+  z-index: 51;
+  overflow: hidden;
+  transition: 0.6s linear all;
+  transform-origin: top;
+  pointer-events: all;
+}
+
+.envelope-folds {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 50;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.envelope-flap::before,
+.envelope-left::before,
+.envelope-right::before,
+.envelope-bottom::before {
+  content: "";
+  transform: rotate(45deg);
+  background: var(--envelope-bg);
+  box-shadow: 0 0 30px -5px var(--envelope-shadow);
+  width: 100%;
+  aspect-ratio: 1;
+  display: block;
+  position: absolute;
+  top: 60%;
+}
+
+.envelope-flap::before {
+  border-radius: 5rem;
+  bottom: 30px;
+  border-radius: 5rem;
+  top: auto;
+}
+
+@media (min-width: 650px) {
+  .envelope-flap::before {
+    bottom: 100px;
+  }
+}
+
+.envelope-left::before {
+  top: 10%;
+  left: -65%;
+}
+
+.envelope-right::before {
+  top: 10%;
+  right: -65%;
+}
+
+.envelope-bottom::before {
+  top: 60%;
+  border-radius: 5rem;
+}
+
+.heart {
+  z-index: 60;
+  position: relative;
+  box-shadow: none;
+  border: none;
+  width: 70px;
+  aspect-ratio: 1;
+  background: radial-gradient(circle at 60% 65%, var(--heart-bg) 64%, #0000 65%)
+      top left/50% 50%,
+    radial-gradient(circle at 40% 65%, var(--heart-bg) 64%, #0000 65%) top
+      right/50% 50%,
+    conic-gradient(from -45deg at 50% 85.5%, var(--heart-bg) 90deg, #0000 0)
+      bottom/100% 50%;
+  background-repeat: no-repeat;
+  left: 50%;
+  top: 70%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+@media (min-width: 650px) {
+  .heart {
+    width: 150px;
+  }
+}
+
+.heart::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 70px;
+  aspect-ratio: 1;
+  background: radial-gradient(circle at 60% 65%, #ffffff26 64%, #0000 65%) top
+      left/50% 50%,
+    radial-gradient(circle at 40% 65%, #ffffff26 64%, #0000 65%) top right/50%
+      50%,
+    conic-gradient(from -45deg at 50% 85.5%, #ffffff26 90deg, #0000 0)
+      bottom/100% 50%;
+  background-repeat: no-repeat;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 0.3s ease all;
+  z-index: -1;
+}
+
+@media (min-width: 650px) {
+  .heart::before {
+    width: 150px;
+  }
+}
+
+.heart:hover,
+.heart:active,
+.heart:focus {
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+  color: var(--heart-text);
+}
+
+.heart:hover::before,
+.heart:active::before,
+.heart:focus::before {
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+.heart-text {
+  transform: translateY(-10px);
+  display: block;
+  color: var(--heart-text);
+  font-size: 1.5rem;
+  font-family: var(--letter-font);
+}
+
+.envelope.active * {
+  pointer-events: none;
+}
+
+.envelope.active .envelope-flap {
+  transform: rotateX(-180deg) translateY(0);
+  perspective: 10px;
+}
+
+.envelope.active .envelope-flap::before {
+  box-shadow: inset 0 0 30px -5px var(--envelope-shadow);
+}
+
+.envelope.active .heart {
+  display: none;
+}
+
+.letter {
+  box-sizing: border-box;
+  font-family: var(--letter-font);
+  font-size: 1rem;
+  line-height: 1.1;
+  background-color: var(--letter-bg);
+  color: var(--letter-text);
+  width: var(--letter-x);
+  height: var(--letter-y);
+  user-select: none;
+  box-shadow: inset 0 0 20px -5px var(--letter-shadow);
+  padding: 3rem 1rem 1rem;
+  margin: 0;
+  cursor: grab;
+  position: absolute;
+  top: 1rem;
+  overflow: auto;
+  text-align: center;
+  border: 0;
+}
+
+.letter:active {
+  cursor: grabbing;
+}
+
+.letter.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.letter cite {
+  font-size: 1.25rem;
+  color: var(--letter-text);
+  margin-top: 1rem;
+}
+
+.letter cite::before {
+  content: none;
+}
+
+.letter:nth-child(even) {
+  transform: skew(-2deg) translateY(-4px);
+}
+
+.letter:nth-child(odd) {
+  transform: skew(2deg) translateY(4px);
+}
+
+@media (min-width: 650px) {
+  .letter {
+    font-size: 1.3rem;
+  }
+}
+
+.closeLetter {
+  font-size: 0 !important;
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  border: 0;
+}
+
+.closeLetter::before {
+  content: "˚ʚ❤︎ɞ˚";
+  font-size: 1.5rem !important;
+  font-family: var(--letter-font);
+  color: var(--letter-button-text);
+  text-align: center;
+}
+
+.closeLetter:hover,
+.closeLetter:active,
+.closeLetter:focus {
+  background-color: transparent;
+  color: var(--letter-text);
+  transform: translateX(-50%);
+  padding: 0;
+  margin: 0;
+}
+
+.closeLetter:hover::before,
+.closeLetter:active::before,
+.closeLetter:focus::before {
+  content: "xXx";
+}
+
+/* Footer Logos */
+@import url("https://frills.dev/css/abstracts/_variables.css");
+@import url("https://frills.dev/css/components/_logo.css");
+
+footer {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 10000000;
+}
+
+footer svg {
+  width: 100px;
+}
+
+/* =========================================
+   ESTILO DAS FOTOS (POLAROIDS)
+   ========================================= */
+
+/* Ícone da Mini Polaroid (Para o Menu) */
+.mini-polaroid {
+    width: 60px;
+    height: 70px;
+    background-color: white;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    transform: rotate(-5deg);
+    transition: transform 0.2s;
+}
+.mini-polaroid:hover {
+    transform: rotate(0deg) scale(1.1);
+}
+.mini-photo-inner {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 50px;
+    height: 50px;
+    background-color: #333;
+    background-image: linear-gradient(45deg, #333, #555);
+}
+
+/* O Container das Fotos (Dentro da gaveta) */
+.photos-container {
+    overflow: hidden; /* As fotos não saem da gaveta */
+    position: relative;
+}
+
+/* O Papel / Foto Individual */
+.paper {
+    background-color: white; /* Cor de papel fotográfico */
+    padding: 20px;
+    /* Posição absoluta para poder arrastar */
+    position: absolute; 
+    /* Centraliza inicialmente */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    box-shadow: 1px 15px 20px 0px rgba(0,0,0,0.5);
+    border-radius: 3px;
+    width: 200px; /* Tamanho da polaroid */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: grab;
+    transition: z-index 0s; /* Z-index muda instantâneo */
+}
+
+.paper:active {
+    cursor: grabbing;
+}
+
+/* Imagem dentro da polaroid */
+.paper img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    pointer-events: none; /* Importante para não bugar o arrasto */
+    user-select: none;
+}
+
+/* Texto nas fotos */
+.paper p {
+    font-family: 'Homemade Apple', cursive;
+    font-size: 20px;
+    color: #444;
+    margin: 5px 0;
+    line-height: 1.2;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Bilhetinho Vermelho (Exemplo) */
+.paper.red {
+    background-color: #ffebee; /* Um rosa bem clarinho */
+}
+.paper.red p {
+    color: darkred;
+}
+
+/* Espalhar um pouco as fotos para não ficarem todas empilhadas perfeitamente */
+.paper:nth-child(1) { transform: translate(-60%, -60%) rotate(-5deg); }
+.paper:nth-child(2) { transform: translate(-40%, -40%) rotate(3deg); }
+.paper:nth-child(3) { transform: translate(-50%, -30%) rotate(-2deg); }
+.paper:nth-child(4) { transform: translate(-30%, -60%) rotate(5deg); }
+
+/* =========================================
+   ESTILO DO CONVITE
+   ========================================= */
+
+/* 1. Ícone Mini Ticket (Para o Menu) */
+.mini-ticket {
+    width: 80px;
+    height: 40px;
+    background-color: #d4af37; /* Dourado */
+    background-image: linear-gradient(45deg, #d4af37, #f7e98e);
+    border-radius: 3px;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed #8a6e2f;
+}
+
+/* Efeito de "picote" nas laterais do ticket */
+.mini-ticket::before, .mini-ticket::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    background-color: #5d4037; /* Mesma cor do fundo da gaveta */
+    border-radius: 50%;
+}
+.mini-ticket::before { left: -5px; }
+.mini-ticket::after { right: -5px; }
+
+.mini-ticket-text {
+    font-family: serif;
+    font-weight: bold;
+    color: #5d4037;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+}
+
+/* 2. O Papel do Convite */
+.paper.invitation {
+    background-color: #fffaf0;
+    width: 400px;
+    height: auto;
+    padding: 40px;
+    border: 1px solid #e0e0e0;
+    gap: 20px;
+    
+    /* REMOVI O TRANSFORM DAQUI! */
+    /* Deixaremos o JavaScript cuidar da posição para ele poder se mexer */
+}
+
+.paper.invitation p {
+    font-family: 'Homemade Apple', cursive;
+    font-size: 24px;
+    color: #444;
+    margin: 0;
+    line-height: 1.5;
+    pointer-events: none; /* Importante para não bloquear o clique do arrasto */
+}
+
+.paper.invitation .highlight {
+    font-size: 32px;
+    color: darkred;
+    margin-top: 10px;
+    border-bottom: 2px dashed #ddd;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+.paper.invitation .signature {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #888;
+}
+
+/* Botão do WhatsApp (Fixo no centro) */
+.whatsapp-btn {
+    position: absolute; /* Fixo em relação à gaveta */
+    
+    /* Centraliza na tela */
+    top: 70%;
+    left: 50%;
+    
+    /* Ajuste Fino: */
+    /* -50% no X centraliza horizontalmente */
+    /* 80px no Y empurra ele para baixo do texto do convite */
+    transform: translate(-50%, 80px);
+    
+    background-color: #25D366;
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-decoration: none;
+    
+    padding: 10px 20px;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: transform 0.2s, background-color 0.2s;
+    white-space: nowrap;
+    border: 2px solid #128C7E;
+    z-index: 1; /* Fica na frente do papel */
+}
+
+.whatsapp-btn:hover {
+    /* Mantém a posição e aumenta um pouco */
+    transform: translate(-50%, 80px) scale(1.05);
+    background-color: #128C7E;
+}
+
+/* =========================================
+   ESTILO DO FUTURO (GAVETA 4)
+   ========================================= */
+
+/* 1. Ícone Mini Calendário (Para o Menu) */
+.mini-calendar {
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    border-radius: 5px;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+.mini-calendar-header {
+    width: 100%;
+    height: 20px;
+    background-color: #e53935; /* Vermelho calendário */
+}
+.mini-calendar-body {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #333;
+    font-size: 1.2rem;
+    font-family: sans-serif;
+}
+
+/* 2. Papel do Futuro (Página Interna) */
+.paper.future {
+    background-color: #e3f2fd; /* Azulzinho claro, cor de céu/futuro */
+    width: 450px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid #bbdefb;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.paper.future .title {
+    font-family: 'Homemade Apple', cursive;
+    font-size: 28px;
+    color: #1565c0;
+    margin: 0;
+}
+
+.paper.future .text {
+    font-family: 'Homemade Apple', cursive;
+    font-size: 20px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* 3. Botão da Planilha */
+.sheet-btn {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    /* Posicionado abaixo do papel */
+    transform: translate(-50%, 140px);
+    
+    background-color: #1976d2; /* Azul Google Sheets */
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 1rem;
+    text-decoration: none;
+    
+    padding: 12px 30px;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    border: 2px solid #0d47a1;
+    z-index: 1; /* Fica atrás do papel se arrastar por cima */
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.sheet-btn:hover {
+    transform: translate(-50%, 140px) scale(1.05);
+    background-color: #1565c0;
+}
